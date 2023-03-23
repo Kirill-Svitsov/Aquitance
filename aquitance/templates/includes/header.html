@@ -1,0 +1,32 @@
+{% load static %}
+<nav class="navbar navbar-light" style="background-color: rgb(255, 245, 238, 0.5)">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'products:main' %}">
+        <img src="{% static 'img/aquitance.svg' %}" width="80" height="80" class="d-inline-block align-top" alt="">
+        <span style="color:black">A</span><span style="color:black">quitance</span>
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" style="color:black"
+             href="{% url 'products:main' %}"
+          >
+            Главная
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color:black"
+             href="{% url 'products:category' %}"
+          >
+            Категории товаров
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color:black"
+             href="{% url 'products:basket' %}"
+          >
+            Корзина
+          </a>
+        </li>
+      </ul>
+    </div>
+</nav>

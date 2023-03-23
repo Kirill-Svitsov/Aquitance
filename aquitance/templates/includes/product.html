@@ -1,0 +1,39 @@
+<article>
+    <p>{{ product.title|linebreaksbr }}</p>
+    <p>{{ product.image }}</p>
+    <p>{{ product.price }} рублей</p>
+    <a
+      class="btn btn-primary"
+      href="">
+      Подробнее
+    </a>
+    <p>{{ product.description|linebreaksbr }}</p>
+    <ul>
+      <li>
+        Автор: {{ product.author.get_full_name }}
+      </li>
+      <li>
+        Дата публикации: {{ product.pub_date|date:"d E Y" }}
+      </li>
+      <li>
+        Всего товаров автора: {{ product.author.products.count }}
+      </li>
+      </ul>
+    {% if product.category %}
+      <a
+        class="btn btn-primary"
+        href="{% url 'products:category_list' product.category.slug %}"
+        color="red">
+        Категория: {{ product.category }}
+      </a>
+    {% endif %}
+    <a
+      class="btn btn-primary"
+      href=""
+      role="button">
+      Все товары пользователя
+    </a>
+    {% if not forloop.last %}
+    {% endif %}
+    </article>
+<hr>
