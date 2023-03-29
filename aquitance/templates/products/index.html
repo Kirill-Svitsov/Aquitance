@@ -4,7 +4,8 @@
 {% endblock title %}
 {% block content %}
   <h1 >Последние обновления на сайте</h1>
-  {% for product in products %}
+  {% for product in page_obj %}
     {% include 'includes/product.html' %}
   {% endfor %}
+  {% include 'includes/paginator.html' %}
 {% endblock content %}

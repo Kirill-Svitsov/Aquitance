@@ -30,15 +30,16 @@ class Product(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        verbose_name='Группа',
+        verbose_name='Категория',
         help_text='Выберите группу'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='products_author_related'
+        related_name='products_author_related',
+        verbose_name='Автор'
     )
-    pub_date = models.DateTimeField(auto_now_add=True)
+    pub_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
 
     def __str__(self):
         return self.description[:NUM_OF_WORDS]

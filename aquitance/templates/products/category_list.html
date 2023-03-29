@@ -5,7 +5,7 @@
 {% block content %}
   <h1>{{ category_name.title}}</h1>
   <p>{{ category_name.description }}</p>
-  {% for product in products %}
+  {% for product in page_obj %}
     <article>
       <ul>
         <li>
@@ -14,8 +14,8 @@
         {% if product.image %}
         <li>
           {{ product.image }}
-        {% endif %}
         </li>
+        {% endif %}
         <li>
           {{ product.price}} рублей
         </li>
@@ -26,7 +26,7 @@
           Дата публикации: {{ product.pub_date|date:"d E Y" }}
         </li>
         <li>
-          Всего товаров автора: {{ product.author.products.count }}
+          Всего товаров автора: {{ product.author.products_author_related.count }}
         </li>
       </ul>
       <p>{{ product.description|linebreaksbr }}</p>
@@ -39,4 +39,5 @@
     </a>
     {% if not forloop.last %}<hr>{% endif %}
   {% endfor %}
+  {% include 'includes/paginator.html' %}
 {% endblock %}

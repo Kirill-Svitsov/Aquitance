@@ -4,7 +4,8 @@
 {% endblock title %}
 {% block content %}
   <h1 >Полный список категорий</h1>
-  {% for category in all_category %}
+  {% for category in page_obj %}
     {% include 'includes/category_includes.html' %}
   {% endfor %}
+  {% include 'includes/paginator.html' %}
 {% endblock content %}

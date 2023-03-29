@@ -1,13 +1,27 @@
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
+# from .forms import PostForm
+
 from .models import *
+
+num_of_pub: int = 10
+
+
+def general_paginator(request, paginator):
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return page_obj
 
 
 def index(request):
     template = 'products/index.html'
-    products = Product.objects.order_by('-pub_date')[:10]
+    products_list = Product.objects.all()
+    paginator = Paginator(products_list, num_of_pub)
+    page_obj = general_paginator(request, paginator)
     context = {
-        'products': products,
+        'page_obj': page_obj,
     }
     return render(request, template, context)
 
@@ -23,8 +37,10 @@ def product_detail(request):
 def category(request):
     template = 'products/category.html'
     all_category = Category.objects.all()
+    paginator = Paginator(all_category, num_of_pub)
+    page_obj = general_paginator(request, paginator)
     context = {
-        'all_category': all_category,
+        'page_obj': page_obj,
     }
     return render(request, template, context)
 
@@ -32,9 +48,11 @@ def category(request):
 def category_list(request, slug):
     category_name = get_object_or_404(Category, slug=slug)
     products = category_name.products_category_related.order_by('-pub_date')
+    paginator = Paginator(products, num_of_pub)
+    page_obj = general_paginator(request, paginator)
     template = 'products/category_list.html'
     context = {
-        'products': products,
+        'page_obj': page_obj,
         'category_name': category_name,
     }
     return render(request, template, context)

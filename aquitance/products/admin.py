@@ -7,7 +7,7 @@ from .models import Product, Category
 
 class ProductAdmin(admin.ModelAdmin):
     # Перечисляем поля, которые должны отображаться в админке
-    list_display = ('pk', 'title', 'pub_date', 'author')
+    list_display = ('pk', 'title', 'pub_date', 'author', 'category')
     # Добавляем интерфейс для поиска по тексту постов
     search_fields = ('title', 'price')
     # Добавляем возможность фильтрации по дате

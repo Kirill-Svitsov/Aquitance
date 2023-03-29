@@ -16,7 +16,7 @@
         Дата публикации: {{ product.pub_date|date:"d E Y" }}
       </li>
       <li>
-        Всего товаров автора: {{ product.author.products.count }}
+        Всего товаров автора: {{ product.author.products_author_related.count }}
       </li>
       </ul>
     {% if product.category %}
