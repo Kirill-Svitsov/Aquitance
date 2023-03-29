@@ -40,6 +40,13 @@
       <ul class="nav nav-pills">
         {% with request.resolver_match.view_name as view_name %}
         <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'products:index' %}active{% endif %}"
+             href="{% url 'products:index' %}"
+          >
+            Главная
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {% if view_name  == 'about:author' %}active{% endif %}"
              href="{% url 'about:author' %}"
           >
@@ -53,10 +60,17 @@
             Контакты
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'products:category' %}active{% endif %}"
+             href="{% url 'products:category' %}"
+          >
+            Категории товаров
+          </a>
+        </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link"
-             href=""
+          <a class="nav-link {% if view_name  == 'products:product_create' %}active{% endif %}"
+             href="{% url 'products:product_create' %}"
           >
             Разместить объявление
           </a>
@@ -80,6 +94,13 @@
              href="{% url 'products:profile' user %}"
           >
             Пользователь: {{ user.username }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+             href=""
+          >
+            Корзина
           </a>
         </li>
         {% else %}

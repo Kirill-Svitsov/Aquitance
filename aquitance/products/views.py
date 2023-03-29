@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
-# from .forms import PostForm
+from .forms import ProductForm
 
 from .models import *
 
@@ -22,14 +22,6 @@ def index(request):
     page_obj = general_paginator(request, paginator)
     context = {
         'page_obj': page_obj,
-    }
-    return render(request, template, context)
-
-
-def product_detail(request):
-    template = 'products/product_detail.html'
-    context = {
-        'text': 'Детали товара',
     }
     return render(request, template, context)
 
@@ -84,3 +76,32 @@ def product_detail(request, product_id):
         'product': product,
     }
     return render(request, 'products/product_detail.html', context)
+
+
+@login_required
+def product_create(request):
+    form = ProductForm(request.POST or None)
+    if form.is_valid():
+        create_product = form.save(commit=False)
+        create_product.author = request.user
+        create_product.save()
+        return redirect('products:profile', create_product.author)
+    context = {
+        'form': form,
+    }
+    return render(request, 'products/create_product.html', context)
+
+
+def product_edit(request, product_id):
+    edit_product = get_object_or_404(Product, pk=product_id)
+    if request.user != edit_product.author:
+        return redirect('products:product_detail', product_id)
+    form = ProductForm(request.POST or None, instance=edit_product)
+    if form.is_valid():
+        form.save()
+        return redirect('products:product_detail', product_id)
+    context = {
+        'form': form,
+        'is_edit': True,
+    }
+    return render(request, 'products/create_product.html', context)
