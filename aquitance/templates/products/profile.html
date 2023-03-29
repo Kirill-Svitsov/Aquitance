@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}
+  Профайл пользователя {{ author.get_full_name }}
+{% endblock title %}
+{% block content %}
+  <main>
+      <div class="container py-5">
+        <h1>Все товары пользователя {{ author.get_full_name }} </h1>
+        <h3>Всего постов: <span>{{ author.products.count }}</span></h3>
+        <a
+          class="btn btn-primary"
+          href="#"
+          role="button">
+          Все товары пользователя
+        </a>
+        <br>
+        <br>
+        {% for product in page_obj %}
+          <article>
+            <ul>
+              <li>
+                Автор: {{ product.author.get_full_name }}
+              </li>
+              <li>
+                Дата публикации: {{ product.pub_date|date:"d E Y" }}
+              </li>
+              <li>
+                {{ product.category }}
+              </li>
+            </ul>
+            <a class="link-primary" href="{% url 'products:product_detail' product.pk %}">Подробнее</a>
+            <br>
+            <br>
+            {% if product.group %}
+              <button type="button" class="btn btn-outline-info">
+                <a
+                href="{% url 'products:category_list' product.category.slug %}"
+                color="red">
+                Все записи группы
+                </a>
+              </button>
+            {% endif %}
+            </article>
+            {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %}
+      </div>
+    </main>
+{% endblock content %}

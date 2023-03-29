@@ -64,3 +64,23 @@ def basket(request):
         'text': 'Страница корзины',
     }
     return render(request, template, context)
+
+
+def profile(request, username):
+    author = get_object_or_404(User, username=username)
+    products_list = author.products_author_related.order_by('-pub_date')
+    paginator = Paginator(products_list, num_of_pub)
+    page_obj = general_paginator(request, paginator)
+    context = {
+        'author': author,
+        'page_obj': page_obj,
+    }
+    return render(request, 'products/profile.html', context)
+
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    context = {
+        'product': product,
+    }
+    return render(request, 'products/product_detail.html', context)

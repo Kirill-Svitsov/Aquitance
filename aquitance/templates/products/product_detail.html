@@ -1,5 +1,56 @@
 {% extends 'base.html' %}
-{% block title %}Подрбности{%endblock%}
+{% block title %}
+  Товар {{ product_obj.fullstory|truncatechars:30 }}
+{% endblock title %}
 {% block content %}
-<h1>{{text}}</h1>
+  <main>
+      <div class="row">
+        <aside class="col-12 col-md-3">
+          <p>{{ product.title|linebreaksbr }}</p>
+          <p>{{ product.image }}</p>
+          <p>{{ product.price }} рублей</p>
+          <p>{{ product.description|linebreaksbr }}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Дата публикации: {{ product.pub_date|date:"d E Y" }}
+            </li>
+            <li class="list-group-item">
+              Автор: {{ product.author.get_full_name }}
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Всего постов автора:  {{ product.author.products_author_related.count }}
+            </li>
+            {% if product.category %}
+              <li class="list-group-item">
+              Категория: {{ product.category }}
+              <a
+                href="{% url 'products:category_list' product.category.slug %}"
+                class="btn btn-primary"
+                color="red">
+                Все товары категории
+                </a>
+              </li>
+            {% endif %}
+            <li class="list-group-item">
+              <a
+                class="btn btn-primary"
+                href="{% url 'products:profile' product.author %}"
+                role="button">
+                Все товары пользователя
+              </a>
+            </li>
+            {% if user == product.author %}
+              <li class="list-group-item">
+              <a
+                class="btn btn-primary"
+                href="{% url 'products:product_edit' product.pk %}"
+                role="button">
+                Редактировать
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </aside>
+      </div>
+    </main>
 {% endblock %}

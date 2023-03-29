@@ -1,32 +1,104 @@
 {% load static %}
+<!--<nav class="navbar navbar-light" style="background-color: rgb(255, 245, 238, 0.5)">-->
+<!--    <div class="container">-->
+<!--      <a class="navbar-brand" href="{% url 'products:index' %}">-->
+<!--        <img src="{% static 'img/aquitance.svg' %}" width="80" height="80" class="d-inline-block align-top" alt="">-->
+<!--        <span style="color:black">A</span><span style="color:black">quitance</span>-->
+<!--      </a>-->
+<!--      <ul class="nav nav-pills">-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" style="color:black"-->
+<!--             href="{% url 'products:index' %}"-->
+<!--          >-->
+<!--            Главная-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" style="color:black"-->
+<!--             href="{% url 'products:category' %}"-->
+<!--          >-->
+<!--            Категории товаров-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" style="color:black"-->
+<!--             href="{% url 'products:basket' %}"-->
+<!--          >-->
+<!--            Корзина-->
+<!--          </a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--</nav>-->
+{% load static %}
 <nav class="navbar navbar-light" style="background-color: rgb(255, 245, 238, 0.5)">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'products:index' %}">
-        <img src="{% static 'img/aquitance.svg' %}" width="80" height="80" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="{% url 'products:index'  %}">
+        <img src="{% static 'img/aquitance.svg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
         <span style="color:black">A</span><span style="color:black">quitance</span>
       </a>
       <ul class="nav nav-pills">
+        {% with request.resolver_match.view_name as view_name %}
         <li class="nav-item">
-          <a class="nav-link" style="color:black"
-             href="{% url 'products:index' %}"
+          <a class="nav-link {% if view_name  == 'about:author' %}active{% endif %}"
+             href="{% url 'about:author' %}"
           >
-            Главная
+            Об авторе
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="color:black"
-             href="{% url 'products:category' %}"
+          <a class="nav-link {% if view_name  == 'about:contact' %}active{% endif %}"
+             href="{% url 'about:contact' %}"
           >
-            Категории товаров
+            Контакты
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link"
+             href=""
+          >
+            Разместить объявление
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" style="color:black"
-             href="{% url 'products:basket' %}"
+          <a class="nav-link {% if view_name  == 'users:password_change_form' %}active{% endif %}"
+             href="{% url 'users:password_change_form' %}"
           >
-            Корзина
+            Изменить пароль
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'users:logout' %}active{% endif %}"
+             href="{% url 'users:logout' %}"
+          >
+            Выйти
+          </a>
+        </li>
+        <li>
+          <a class="nav-link {% if view_name  == 'products:profile' %}active{% endif %}"
+             href="{% url 'products:profile' user %}"
+          >
+            Пользователь: {{ user.username }}
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'users:login' %}active{% endif %}"
+             href="{% url 'users:login' %}"
+          >
+            Войти
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if view_name  == 'users:signup' %}active{% endif %}"
+             href="{% url 'users:signup' %}"
+          >
+            Регистрация
+          </a>
+        </li>
+        {% endif %}
+        {% endwith %}
       </ul>
     </div>
 </nav>

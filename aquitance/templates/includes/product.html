@@ -4,7 +4,7 @@
     <p>{{ product.price }} рублей</p>
     <a
       class="btn btn-primary"
-      href="">
+      href="{% url 'products:product_detail' product.pk %}">
       Подробнее
     </a>
     <p>{{ product.description|linebreaksbr }}</p>
@@ -28,10 +28,10 @@
       </a>
     {% endif %}
     <a
-      class="btn btn-primary"
-      href=""
-      role="button">
-      Все товары пользователя
+        class="btn btn-primary"
+        href="{% url 'products:profile' product.author %}"
+        role="button">
+        Все посты пользователя
     </a>
     {% if not forloop.last %}
     {% endif %}
