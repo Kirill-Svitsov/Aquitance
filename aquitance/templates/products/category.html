@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}
+  Страница категорий
+{% endblock title %}
+{% block content %}
+  <h1 >Полный список категорий</h1>
+  {% for category in all_category %}
+    {% include 'includes/category_includes.html' %}
+  {% endfor %}
+{% endblock content %}

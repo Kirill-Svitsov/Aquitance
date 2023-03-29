@@ -1,47 +1,19 @@
 <article>
-    <p>{{ product.title|linebreaksbr }}</p>
-    <p>{{ product.image }}</p>
-    <p>{{ product.price }} рублей</p>
-    <p>{{ product.description|linebreaksbr }}</p>
-    <ul>
-      <li>
-        Автор: {{ product.author.get_full_name }}
-      </li>
-      <li>
-        Дата публикации: {{ product.pub_date|date:"d E Y" }}
-      </li>
-      <li>
-        Всего товаров автора: {{ product.author.products.count }}
-      </li>
-      <li>
-        Категория:
-        <a
-          href="{% url 'products:category_list' product.category.slug %}"
-          color="red">
-          {{ product.category }}
-        </a>
-      </li>
-      </ul>
-    {% if post.group %}
+  <p>{{ category.title }}</p>
+  <p>{{ category.image }}</p>
+  <p>{{ category.description|linebreaksbr }}</p>
+  <ul>
+    <li>
+      Всего товаров в категории: {{ category.products.count }}
+    </li>
+    <li>
+      Перейти:
       <a
-        class="btn btn-primary"
-        href="{% url 'products:category_list' product.category.slug %}"
+        href="{% url 'products:category_list' category.slug %}"
         color="red">
-        Категория товара {{ product.category }}
+        {{ category.title }}
       </a>
-    {% endif %}
-    <a
-      class="btn btn-primary"
-      href=""
-      role="button">
-      Все товары пользователя
-    </a>
-    <a
-      class="btn btn-primary"
-      href="">
-      Подробнее
-    </a>
-    {% if not forloop.last %}
-    {% endif %}
-    </article>
+    </li>
+  </ul>
+</article>
 <hr>

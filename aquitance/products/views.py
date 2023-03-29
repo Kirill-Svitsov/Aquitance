@@ -22,15 +22,16 @@ def product_detail(request):
 
 def category(request):
     template = 'products/category.html'
+    all_category = Category.objects.all()
     context = {
-        'text': 'Страница конкретной категории',
+        'all_category': all_category,
     }
     return render(request, template, context)
 
 
 def category_list(request, slug):
     category_name = get_object_or_404(Category, slug=slug)
-    products = category_name.products.order_by('-pub_date')
+    products = category_name.products_category_related.order_by('-pub_date')
     template = 'products/category_list.html'
     context = {
         'products': products,
