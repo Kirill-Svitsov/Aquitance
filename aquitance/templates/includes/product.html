@@ -1,39 +1,45 @@
-<article>
-    <p>{{ product.title|linebreaksbr }}</p>
-    <p>{{ product.image }}</p>
-    <p>{{ product.price }} рублей</p>
-    <a
-      class="btn btn-primary"
-      href="{% url 'products:product_detail' product.pk %}">
-      Подробнее
-    </a>
-    <p>{{ product.description|linebreaksbr }}</p>
-    <ul>
-      <li>
-        Автор: {{ product.author.get_full_name }}
-      </li>
-      <li>
-        Дата публикации: {{ product.pub_date|date:"d E Y" }}
-      </li>
-      <li>
-        Всего товаров автора: {{ product.author.products_author_related.count }}
-      </li>
-      </ul>
-    {% if product.category %}
-      <a
-        class="btn btn-primary"
-        href="{% url 'products:category_list' product.category.slug %}"
-        color="red">
-        Категория: {{ product.category }}
+<div class="col">
+    <div class="card h-100">
+      <a href="{% url 'products:product_detail' product.pk %}">
+        <div class="card-img-top text-center">
+          {% if product.image %}
+            {{ product.image }}
+          {% else %}
+            Нет изображения
+          {% endif %}
+        </div>
       </a>
-    {% endif %}
-    <a
-        class="btn btn-primary"
-        href="{% url 'products:profile' product.author %}"
-        role="button">
-        Все посты пользователя
-    </a>
-    {% if not forloop.last %}
-    {% endif %}
-    </article>
-<hr>
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title|linebreaksbr }}</h5>
+        <p class="card-text">{{ product.description|linebreaksbr }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ product.price }} ₽</li>
+        <li class="list-group-item">Продавец:
+          <a
+          class="card-link"
+          href="{% url 'products:profile' product.author %}"
+          >
+            {{ product.author.get_full_name }}
+          </a>
+        </li>
+        <li class="list-group-item">Всего товаров автора: {{ product.author.products_author_related.count }}</li>
+      </ul>
+      <div class="card-body text-center">
+        <a href="{% url 'products:product_detail' product.pk %}" class="card-link">
+          Подробнее
+        </a>
+        {% if product.category %}
+        <a
+          class="card-link"
+          href="{% url 'products:category_list' product.category.slug %}"
+          >
+          {{ product.category }}
+        </a>
+        {% endif %}
+      </div>
+      <div class="card-footer text-center">
+        <small class="text-muted">Дата публикации: {{ product.pub_date|date:"d E Y" }}</small>
+      </div>
+    </div>
+</div>

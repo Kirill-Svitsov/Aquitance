@@ -1,19 +1,25 @@
-<article>
-  <p>{{ category.title }}</p>
-  <p>{{ category.image }}</p>
-  <p>{{ category.description|linebreaksbr }}</p>
-  <ul>
-    <li>
-      Всего товаров в категории: {{ category.products_category_related.count }}
-    </li>
-    <li>
-      Перейти:
-      <a
-        href="{% url 'products:category_list' category.slug %}"
-        color="red">
-        {{ category.title }}
+<div class="col">
+  <div class="card h-100">
+    <a href="{% url 'products:category_list' category.slug %}">
+      <div class="card-img-top text-center">
+        {% if category.image %}
+          {{ category.image }}
+        {% else %}
+          Нет изображения
+        {% endif %}
+      </div>
+    </a>
+    <div class="card-body">
+      <h5 class="card-title">{{ category.title|linebreaksbr }}</h5>
+      <p class="card-text">{{ category.description|linebreaksbr }}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Всего товаров в категории: {{ category.products_category_related.count }}</li>
+    </ul>
+    <div class="card-body">
+      <a href="{% url 'products:category_list' category.slug %}" class="card-link">
+        Подробнее
       </a>
-    </li>
-  </ul>
-</article>
-<hr>
+    </div>
+  </div>
+</div>

@@ -3,41 +3,49 @@
   {{ category_name.title }}
 {% endblock title %}
 {% block content %}
-  <h1>{{ category_name.title}}</h1>
-  <p>{{ category_name.description }}</p>
+<h1>{{ category_name.title}}</h1>
+<p>{{ category_name.description }}</p>
+<div class="row row-cols-1 row-cols-md-3 g-4">
   {% for product in page_obj %}
-    <article>
-      <ul>
-        <li>
-          {{ product.title}}
-        </li>
-        {% if product.image %}
-        <li>
-          {{ product.image }}
-        </li>
-        {% endif %}
-        <li>
-          {{ product.price}} рублей
-        </li>
-        <li>
-          Автор: {{ product.author.get_full_name}}
-        </li>
-        <li>
-          Дата публикации: {{ product.pub_date|date:"d E Y" }}
-        </li>
-        <li>
-          Всего товаров автора: {{ product.author.products_author_related.count }}
-        </li>
-      </ul>
-      <p>{{ product.description|linebreaksbr }}</p>
-    </article>
-    <a
-      class="btn btn-primary"
-      href="{% url 'products:profile' product.author %}"
-      role="button">
-      Все товары пользователя
-    </a>
-    {% if not forloop.last %}<hr>{% endif %}
+    <div class="col">
+      <div class="card h-100">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card-img-top text-center">
+            {% if product.image %}
+              {{ product.image }}
+            {% else %}
+              Нет изображения
+            {% endif %}
+          </div>
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ product.title|linebreaksbr }}</h5>
+          <p class="card-text">{{ product.description|linebreaksbr }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ product.price }} ₽</li>
+          <li class="list-group-item">Продавец: {{ product.author.get_full_name }}</li>
+          <li class="list-group-item">Всего товаров автора: {{ product.author.products_author_related.count }}</li>
+        </ul>
+        <div class="card-body">
+          <a href="{% url 'products:product_detail' product.pk %}" class="card-link">
+            Подробнее
+          </a>
+          {% if product.category %}
+            <a
+              class="card-link"
+              href="{% url 'products:category_list' product.category.slug %}"
+            >
+              Категория: {{ product.category }}
+            </a>
+            {% endif %}
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Дата публикации: {{ product.pub_date|date:"d E Y" }}</small>
+        </div>
+      </div>
+    </div>
   {% endfor %}
-  {% include 'includes/paginator.html' %}
+</div>
+{% include 'includes/paginator.html' %}
 {% endblock %}
