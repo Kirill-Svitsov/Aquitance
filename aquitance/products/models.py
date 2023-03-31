@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-NUM_OF_WORDS = 15
+NUM_OF_WORDS = 20
 
 
 class Category(models.Model):
@@ -42,7 +42,7 @@ class Product(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
 
     def __str__(self):
-        return self.description[:NUM_OF_WORDS]
+        return self.title[:NUM_OF_WORDS]
 
     class Meta:
         ordering = ("-pub_date",)
